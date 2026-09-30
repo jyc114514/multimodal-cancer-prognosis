@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "data": {
+    "id_column": "patient_id",
+    "time_column": "time",
+    "event_column": "event",
+    "one_row_per_subject": true
+  },
+  "validation": {
+    "method": "group_stratified_k_fold",
+    "folds": 5,
+    "seed": 2026
+  },
+  "preprocessing": {
+    "imputation": "training_fold_median",
+    "scaling": "training_fold_mean_standard_deviation"
+  },
+  "model": {
+    "type": "ridge_linear_cox",
+    "alpha": 0.1,
+    "learning_rate": 0.02,
+    "epochs": 300
+  }
+}
