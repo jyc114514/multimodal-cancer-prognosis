@@ -1,6 +1,8 @@
 # Multimodal Cancer Prognosis
 
-Leakage-aware methodology reference for survival-risk modelling with prepared biomedical features.
+[![CI](https://github.com/jyc114514/multimodal-cancer-prognosis/actions/workflows/ci.yml/badge.svg)](https://github.com/jyc114514/multimodal-cancer-prognosis/actions/workflows/ci.yml)
+
+**Leakage-aware reference workflow for multimodal biomedical survival-risk modelling with patient-level validation.**
 
 This repository demonstrates a small, reproducible workflow for retrospective censored time-to-event analysis: define a subject-level table, keep subjects together during splitting, fit learned preprocessing inside each training fold, fit a regularized Cox model, and evaluate censoring-aware risk ranking.
 
@@ -23,7 +25,21 @@ flowchart TD
 
 ## Overview
 
-The code is for researchers and engineers who need a compact reference for patient-level survival-risk data flow and evaluation. In this code, subject_id is the subject grouping key and represents the patient-level unit. Raw study data and pretrained model weights are not included.
+This repository is a clean, reusable workflow for biomedical survival-risk modelling with prepared subject-level features. It emphasizes patient-level validation: subjects stay together during splitting, learned preprocessing is fitted inside each training fold, and a regularized Cox model is evaluated with a censoring-aware C-index.
+
+In this schema, `subject_id` identifies the patient-level subject. Raw study data and pretrained model weights are not included.
+
+> **Research background.** This public methodology reference grew out of a broader retrospective TCGA-BRCA multimodal cancer-prognosis project exploring whole-slide-derived pathology representations, mRNA expression, clinical information, attention-based MIL, multimodal fusion, Cox-style survival objectives, and privileged clinical information. This repository extracts reusable validation and preprocessing methodology; it does not reproduce the full historical research codebase.
+>
+> See [Project Background](docs/project_background.md) for context on the broader project and this public reference.
+
+## Quick links
+
+- [Project background](docs/project_background.md)
+- [Methodology](docs/methodology.md)
+- [Validation principles](docs/validation.md)
+- [Reproducibility](docs/reproducibility.md)
+- [Data availability](docs/data_availability.md)
 
 ## Key features
 
@@ -93,10 +109,6 @@ The evaluate and stability commands print synthetic C-index values for software 
 - tests/: unit and synthetic workflow tests
 - docs/: methodology, validation, reproducibility, data availability and project background
 - .github/workflows/: continuous integration
-
-## Project background
-
-The broader research project explored TCGA-BRCA prognosis using whole-slide-derived features, mRNA and clinical information. See [project background](docs/project_background.md) for context and a clear distinction between that historical research and this current reference implementation.
 
 ## Validation principles
 
