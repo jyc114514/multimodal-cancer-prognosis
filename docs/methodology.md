@@ -2,7 +2,7 @@
 
 ## Unit of analysis
 
-The loader requires one row per subject. Aggregate repeated slides or specimens with a prespecified rule before using this interface. The split helper can keep repeated group rows together, but the model input table should be defined and audited at the intended analysis grain.
+The loader expects one row per subject, keyed by subject_id. In this reference, a subject is the patient-level grouping unit. Aggregate repeated slides or specimens with a prespecified rule before loading the model table. The split helper keeps rows from one subject together.
 
 ## Preprocessing
 

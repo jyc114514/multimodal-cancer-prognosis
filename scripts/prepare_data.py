@@ -13,7 +13,7 @@ from cancer_prognosis.data import read_cohort_csv
 def main():
     parser = argparse.ArgumentParser(description="Validate a one-row-per-subject survival table.")
     parser.add_argument("--input", required=True)
-    parser.add_argument("--id-column", default="patient_id")
+    parser.add_argument("--id-column", default="subject_id")
     parser.add_argument("--time-column", default="time")
     parser.add_argument("--event-column", default="event")
     args = parser.parse_args()

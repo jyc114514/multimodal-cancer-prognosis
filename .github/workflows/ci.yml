@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "${{ matrix.python-version }}"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt pytest
+      - name: Compile
+        run: python -m compileall src scripts tests examples
+      - name: Test
+        run: pytest -q
+      - name: Synthetic CLI smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          tmp_dir="$(mktemp -d)"
+          trap 'rm -rf "$tmp_dir"' EXIT
+          echo "Synthetic software smoke only; all generated metrics are not scientific results."
+          python examples/synthetic_example/generate.py --output "$tmp_dir/train.csv" --subjects 80 --seed 17 --id-prefix CI_TRAIN
+          python examples/synthetic_example/generate.py --output "$tmp_dir/eval.csv" --subjects 40 --seed 29 --id-prefix CI_EVAL
+          python scripts/prepare_data.py --input "$tmp_dir/train.csv"
+          python scripts/train.py --train-csv "$tmp_dir/train.csv" --model-out "$tmp_dir/model.json" --epochs 40
+          python scripts/evaluate.py --input-csv "$tmp_dir/eval.csv" --model "$tmp_dir/model.json"
+          python scripts/run_stability_analysis.py --input-csv "$tmp_dir/train.csv" --folds 3 --seed 11 --epochs 40

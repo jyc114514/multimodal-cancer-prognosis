@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "data": {
-    "id_column": "patient_id",
+    "id_column": "subject_id",
     "time_column": "time",
     "event_column": "event",
     "one_row_per_subject": true

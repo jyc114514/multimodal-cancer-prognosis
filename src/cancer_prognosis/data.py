@@ -50,7 +50,7 @@ def _parse_feature(value):
     return parsed
 
 
-def read_cohort_csv(path, id_column="patient_id", time_column="time", event_column="event"):
+def read_cohort_csv(path, id_column="subject_id", time_column="time", event_column="event"):
     """Read a one-row-per-subject table without printing or returning IDs in logs."""
     with open(path, "r", newline="", encoding="utf-8") as handle:
         reader = csv.DictReader(handle)
